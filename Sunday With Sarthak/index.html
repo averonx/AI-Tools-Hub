@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunday With Sarthak</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="theme-switch">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <header>
+        <h1>Sunday With Sarthak</h1>
+        <p class="tagline">Your weekly dose of politics, memes, and ground stories 🚀</p>
+    </header>
+
+    <nav>
+        <div class="tab-container">
+            <button class="tab-btn active" data-tab="news">News Highlights</button>
+            <button class="tab-btn" data-tab="memes">Political Memes</button>
+            <button class="tab-btn" data-tab="polls">Weekly Polls</button>
+            <button class="tab-btn" data-tab="podcast">Ground Stories</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- News Section -->
+        <section id="news" class="tab-content active">
+            <h2>This Week's Highlights</h2>
+            <div class="news-container">
+                <!-- News items will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Memes Section -->
+        <section id="memes" class="tab-content">
+            <h2>AI-Generated Political Memes</h2>
+            <div class="meme-carousel">
+                <!-- Memes will be dynamically loaded -->
+            </div>
+        </section>
+
+        <!-- Polls Section -->
+        <section id="polls" class="tab-content">
+            <h2>Weekly Poll</h2>
+            <div class="poll-container">
+                <div class="poll-question">
+                    <h3>Who would make a better PM?</h3>
+                    <div class="candidates">
+                        <div class="candidate">
+                            <img src="images/candidate1.jpg" alt="Candidate 1">
+                            <button class="vote-btn" data-candidate="1">Vote 🗳️</button>
+                            <div class="vote-percentage">50%</div>
+                        </div>
+                        <div class="candidate">
+                            <img src="images/candidate2.jpg" alt="Candidate 2">
+                            <button class="vote-btn" data-candidate="2">Vote 🗳️</button>
+                            <div class="vote-percentage">50%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Podcast Section -->
+        <section id="podcast" class="tab-content">
+            <h2>Ground Stories Podcast</h2>
+            <div class="podcast-player">
+                <div class="episode-list">
+                    <!-- Podcast episodes will be dynamically loaded -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Sunday With Sarthak. Made with ❤️ for Politics</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
