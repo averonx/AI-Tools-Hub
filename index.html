@@ -1,45 +1,1036 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Coding Tools Directory</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Coding Tools Directory</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <style>
+    /* Global Dark Theme & Grid Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Roboto', sans-serif;
+      /* Simple grid pattern background (SVG) */
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="%23121212"/><path d="M0 0h40v40H0z" fill="none"/><path d="M0 0v40M0 0h40" stroke="%23222222" stroke-width="0.5"/></svg>');
+    }
+    
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      border-bottom: 1px solid #333;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      font-weight: 500;
+    }
+    
+    header p {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #aaaaaa;
+    }
+    
+    /* Search bar styling */
+    .search-container {
+      max-width: 600px;
+      margin: 20px auto;
+      display: flex;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #C0C0C0; /* Silver border */
+      border-radius: 4px;
+      font-size: 1em;
+      background-color: #C0C0C0; /* Silver background */
+      color: #000; /* Dark text */
+      font-weight: bold;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .search-container input::placeholder {
+      color: #000; /* Dark black placeholder text */
+      font-weight: bold;
+    }
+    .search-container input:hover,
+    .search-container input:focus {
+      box-shadow: 0 0 12px 2px rgba(192,192,192,0.8);
+      border-color: #ffffff;
+      outline: none;
+    }
+    
+    /* Navigation Categories */
+    .nav-categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .nav-categories button {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .nav-categories button:hover {
+      background-color: #333;
+    }
+    
+    /* Container for cards */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    
+    /* Grid layout for cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    /* Card styling */
+    .card {
+      background-color: #1f1f1f;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      margin: 0;
+      font-size: 1.25em;
+      font-weight: 500;
+    }
+    .card-category {
+      font-size: 0.9em;
+      color: #bbbbbb;
+      margin: 10px 0;
+    }
+    .card-description {
+      font-size: 0.95em;
+      margin-bottom: 10px;
+    }
+    .card-keyfeatures {
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+    .card-keyfeatures li {
+      margin-bottom: 5px;
+    }
+    .card-pricing {
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .card a {
+      text-decoration: none;
+      color: #00acee;
+      font-weight: 500;
+    }
+    
+    /* Active button styling */
+    .nav-categories button.active {
+      background-color: #00acee;
+      color: #000;
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>AI Coding Tools Directory</h1>
-        <p>Discover the best AI-powered tools to supercharge your coding workflow</p>
-        <input type="text" id="search-bar" placeholder="Search tools..." onkeyup="searchTools()">
-    </header>
-
-    <div class="filters">
-        <button class="filter-btn" onclick="filterTools('all')">All</button>
-        <button class="filter-btn" onclick="filterTools('code-assistant')">Code Assistant</button>
-        <button class="filter-btn" onclick="filterTools('writing')">Writing</button>
+  <header>
+    <h1>AI Coding Tools Directory</h1>
+    <p>Discover the best AI-powered tools to supercharge your coding workflow</p>
+  </header>
+  
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" placeholder="Search tools...">
     </div>
-
-    <section class="tool-grid">
-        <div class="tool-card code-assistant">
-            <h2>GitHub Copilot</h2>
-            <p>AI-powered code completion for faster development.</p>
-            <span class="tag">AI</span> <span class="tag">Code Completion</span>
+    
+    <!-- Navigation Categories -->
+    <div class="nav-categories">
+      <button data-category="all" class="active">All</button>
+      <button data-category="Code Completion">Code Completion</button>
+      <button data-category="Code Generation">Code Generation</button>
+      <button data-category="Code Analysis">Code Analysis</button>
+      <button data-category="Code Assistant">Code Assistant</button>
+      <button data-category="Design & Editing">Design & Editing</button>
+      <button data-category="Music Creation">Music Creation</button>
+      <button data-category="Content Writing">Content Writing</button>
+      <button data-category="Video Editing">Video Editing</button>
+      <button data-category="Data Analysis">Data Analysis</button>
+    </div>
+    
+    <!-- Cards Grid -->
+    <div class="cards">
+      <!-- GitHub Copilot Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=800&auto=format&fit=crop&q=60" alt="GitHub Copilot">
+        <div class="card-body">
+          <h2 class="card-title">GitHub Copilot</h2>
+          <div class="card-category">Code Completion | AI | Productivity | Student-Friendly</div>
+          <p class="card-description">
+            Your AI pair programmer that helps write code faster with smart suggestions. Free for students and teachers!
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Writes code based on your comments</li>
+            <li>Works in multiple programming languages</li>
+            <li>Learns from your coding style</li>
+            <li>Available in popular code editors</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for students and teachers, $10/month for others</p>
+          <a href="https://github.com/features/copilot" target="_blank">Visit Site</a>
         </div>
-
-        <div class="tool-card code-assistant">
-            <h2>Amazon CodeWhisperer</h2>
-            <p>Secure and efficient AI coding assistant from AWS.</p>
-            <span class="tag">AI</span> <span class="tag">AWS</span>
+      </div>
+      
+      <!-- Amazon CodeWhisperer Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542903660-eedba2cda473?w=800&auto=format&fit=crop&q=60" alt="Amazon CodeWhisperer">
+        <div class="card-body">
+          <h2 class="card-title">Amazon CodeWhisperer</h2>
+          <div class="card-category">Code Generation | AI | Security | AWS</div>
+          <p class="card-description">
+            AWS's free AI coding assistant that helps write secure and efficient code, with special focus on AWS services.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Free for individual developers</li>
+            <li>Security scan recommendations</li>
+            <li>Works best with AWS projects</li>
+            <li>Supports multiple languages</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for individual use</p>
+          <a href="https://aws.amazon.com/codewhisperer" target="_blank">Visit Site</a>
         </div>
-
-        <div class="tool-card writing">
-            <h2>Copy.ai</h2>
-            <p>AI writing assistant for blogs and social media content.</p>
-            <span class="tag">Writing</span> <span class="tag">Marketing</span>
+      </div>
+      
+      <!-- Copy.ai Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=60" alt="Copy.ai">
+        <div class="card-body">
+          <h2 class="card-title">Copy.ai</h2>
+          <div class="card-category">Content Writing | AI | Marketing | Blogging</div>
+          <p class="card-description">
+            Your friendly AI writing assistant for creating blogs, social media posts, and marketing content.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Ready-to-use writing templates</li>
+            <li>Works in multiple languages</li>
+            <li>Easy-to-use interface</li>
+            <li>Marketing-focused content</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with limited credits</p>
+          <a href="https://www.copy.ai" target="_blank">Visit Site</a>
         </div>
-    </section>
+      </div>
+      
+      <!-- DALL-E 2 Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&auto=format&fit=crop&q=60" alt="DALL-E 2">
+        <div class="card-body">
+          <h2 class="card-title">DALL-E 2</h2>
+          <div class="card-category">Design & Editing | AI Art | Image Generation | Creative</div>
+          <p class="card-description">
+            Create stunning, realistic images and art from your text descriptions using OpenAI's technology.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>High-quality image generation</li>
+            <li>Simple text-to-image interface</li>
+            <li>Edit existing images</li>
+            <li>Various art styles</li>
+          </ul>
+          <p class="card-pricing">Pricing: 15 free credits monthly</p>
+          <a href="https://labs.openai.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Descript Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=60" alt="Descript">
+        <div class="card-body">
+          <h2 class="card-title">Descript</h2>
+          <div class="card-category">Video Editing | Audio Editing | Transcription</div>
+          <p class="card-description">
+            Edit videos as easily as editing a document, with powerful AI features for audio and video.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Edit video by editing text</li>
+            <li>Automatic transcription</li>
+            <li>Screen recording</li>
+            <li>Remove filler words</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with 3 hours monthly</p>
+          <a href="https://www.descript.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Soundraw Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=60" alt="Soundraw">
+        <div class="card-body">
+          <h2 class="card-title">Soundraw</h2>
+          <div class="card-category">Music Creation | AI | Audio | Content Creation</div>
+          <p class="card-description">
+            Create custom royalty-free music for your videos and content using AI.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Customizable music loops</li>
+            <li>No attribution required</li>
+            <li>Various music styles</li>
+            <li>Export in high quality</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with limited downloads</p>
+          <a href="https://soundraw.io" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Elicit Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60" alt="Elicit">
+        <div class="card-body">
+          <h2 class="card-title">Elicit</h2>
+          <div class="card-category">Data Analysis | Research | Academic | Analysis</div>
+          <p class="card-description">
+            AI research assistant that helps you find and understand scientific papers.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Summarizes research papers</li>
+            <li>Extracts key findings</li>
+            <li>Answers research questions</li>
+            <li>Compares studies</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free with limited queries per month</p>
+          <a href="https://elicit.org" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Ubersuggest Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1572177812156-58036aae439c?w=800&auto=format&fit=crop&q=60" alt="Ubersuggest">
+        <div class="card-body">
+          <h2 class="card-title">Ubersuggest</h2>
+          <div class="card-category">Content Writing | SEO | Marketing | Keywords</div>
+          <p class="card-description">
+            Simple SEO tool that helps you optimize your content and find keywords that rank.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Keyword research tools</li>
+            <li>Competitor analysis</li>
+            <li>Content ideas</li>
+            <li>Site audit features</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with 3 searches daily</p>
+          <a href="https://neilpatel.com/ubersuggest" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Stable Diffusion Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1519638399535-1b036603ac77?w=800&auto=format&fit=crop&q=60" alt="Stable Diffusion">
+        <div class="card-body">
+          <h2 class="card-title">Stable Diffusion</h2>
+          <div class="card-category">Design & Editing | AI Art | Image Generation | Open Source</div>
+          <p class="card-description">
+            Open-source AI image generation with full control over the creative process.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Highly customizable settings</li>
+            <li>No content restrictions</li>
+            <li>Local installation option</li>
+            <li>Active community</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for local use</p>
+          <a href="https://dreamstudio.ai" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- CapCut Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1492724724894-7464c27d0ceb?w=800&auto=format&fit=crop&q=60" alt="CapCut">
+        <div class="card-body">
+          <h2 class="card-title">CapCut</h2>
+          <div class="card-category">Video Editing | Social Media | Templates</div>
+          <p class="card-description">
+            Free video editing tool with AI-powered features perfect for social media content.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Auto-captions</li>
+            <li>Rich template library</li>
+            <li>TikTok integration</li>
+            <li>Easy to use interface</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free with optional premium features</p>
+          <a href="https://capcut.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Notion AI Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&auto=format&fit=crop&q=60" alt="Notion AI">
+        <div class="card-body">
+          <h2 class="card-title">Notion AI</h2>
+          <div class="card-category">Content Writing | Writing | Productivity | Workspace</div>
+          <p class="card-description">
+            AI writing assistant integrated directly into your Notion workspace.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Summarize text instantly</li>
+            <li>Generate fresh ideas</li>
+            <li>Improve writing style</li>
+            <li>Integrated with Notion</li>
+          </ul>
+          <p class="card-pricing">Pricing: 20 free AI responses</p>
+          <a href="https://notion.so" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Boomy Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&auto=format&fit=crop&q=60" alt="Boomy">
+        <div class="card-body">
+          <h2 class="card-title">Boomy</h2>
+          <div class="card-category">Music Creation | Music | Audio | Publishing</div>
+          <p class="card-description">
+            Create and publish AI-generated music tracks in minutes.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>One-click music generation</li>
+            <li>Royalty-free tracks</li>
+            <li>Quick publishing</li>
+            <li>Various genres</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free to create</p>
+          <a href="https://boomy.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- New Code Analysis Card: Semgrep -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1554774853-bdbd19e3fa8d?w=800&auto=format&fit=crop&q=60" alt="Semgrep">
+        <div class="card-body">
+          <h2 class="card-title">Semgrep</h2>
+          <div class="card-category">Code Analysis | Static Analysis | Security</div>
+          <p class="card-description">
+            An open-source static analysis tool that uses pattern matching to find bugs and security vulnerabilities in your code.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Customizable rules</li>
+            <li>Easy integration into CI/CD pipelines</li>
+            <li>Supports multiple programming languages</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free and open-source</p>
+          <a href="https://semgrep.dev/" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- New Code Assistant Card: Codeium -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1612831455544-c0cf4efc0c2d?w=800&auto=format&fit=crop&q=60" alt="Codeium">
+        <div class="card-body">
+          <h2 class="card-title">Codeium</h2>
+          <div class="card-category">Code Assistant | AI | Productivity</div>
+          <p class="card-description">
+            A free AI-powered code assistant that provides intelligent code completions and suggestions across multiple IDEs.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Intelligent code completions</li>
+            <li>Works with multiple IDEs</li>
+            <li>Boosts productivity</li>
+            <li>Free to use</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free</p>
+          <a href="https://www.codeium.com/" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script>
+    // Filtering functionality for navigation category buttons
+    const buttons = document.querySelectorAll('.nav-categories button');
+    const cards = document.querySelectorAll('.card');
 
-    <script src="script.js"></script>
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-category').toLowerCase();
+        
+        // Remove active class from all buttons and add to clicked button
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        cards.forEach(card => {
+          const cardCategory = card.querySelector('.card-category').textContent.toLowerCase();
+          if (filter === 'all' || cardCategory.includes(filter)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Optional styling for active button -->
+  <style>
+    .nav-categories button.active {
+      background-color: #00acee;
+      color: #000;
+    }
+  </style>
+  
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Coding Tools Directory</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <style>
+    /* Global Dark Theme & Grid Background */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: #e0e0e0;
+      font-family: 'Roboto', sans-serif;
+      /* Simple grid pattern background (SVG) */
+      background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="%23121212"/><path d="M0 0h40v40H0z" fill="none"/><path d="M0 0v40M0 0h40" stroke="%23222222" stroke-width="0.5"/></svg>');
+    }
+    
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      border-bottom: 1px solid #333;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      font-weight: 500;
+    }
+    
+    header p {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #aaaaaa;
+    }
+    
+    /* Search bar styling */
+    .search-container {
+      max-width: 600px;
+      margin: 20px auto;
+      display: flex;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #C0C0C0; /* Silver border */
+      border-radius: 4px;
+      font-size: 1em;
+      background-color: #C0C0C0; /* Silver background */
+      color: #000; /* Dark text */
+      font-weight: bold;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .search-container input::placeholder {
+      color: #000; /* Dark black placeholder text */
+      font-weight: bold;
+    }
+    .search-container input:hover,
+    .search-container input:focus {
+      box-shadow: 0 0 12px 2px rgba(192,192,192,0.8);
+      border-color: #ffffff;
+      outline: none;
+    }
+    
+    /* Navigation Categories */
+    .nav-categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .nav-categories button {
+      background-color: #1f1f1f;
+      color: #e0e0e0;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .nav-categories button:hover {
+      background-color: #333;
+    }
+    
+    /* Container for cards */
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    
+    /* Grid layout for cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    /* Card styling */
+    .card {
+      background-color: #1f1f1f;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      margin: 0;
+      font-size: 1.25em;
+      font-weight: 500;
+    }
+    .card-category {
+      font-size: 0.9em;
+      color: #bbbbbb;
+      margin: 10px 0;
+    }
+    .card-description {
+      font-size: 0.95em;
+      margin-bottom: 10px;
+    }
+    .card-keyfeatures {
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+    .card-keyfeatures li {
+      margin-bottom: 5px;
+    }
+    .card-pricing {
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .card a {
+      text-decoration: none;
+      color: #00acee;
+      font-weight: 500;
+    }
+    
+    /* Active button styling */
+    .nav-categories button.active {
+      background-color: #00acee;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AI Coding Tools Directory</h1>
+    <p>Discover the best AI-powered tools to supercharge your coding workflow</p>
+  </header>
+  
+  <div class="container">
+    <!-- Search Bar -->
+    <div class="search-container">
+      <input type="text" placeholder="Search tools...">
+    </div>
+    
+    <!-- Navigation Categories -->
+    <div class="nav-categories">
+      <button data-category="all" class="active">All</button>
+      <button data-category="Code Completion">Code Completion</button>
+      <button data-category="Code Generation">Code Generation</button>
+      <button data-category="Code Analysis">Code Analysis</button>
+      <button data-category="Code Assistant">Code Assistant</button>
+      <button data-category="Design & Editing">Design & Editing</button>
+      <button data-category="Music Creation">Music Creation</button>
+      <button data-category="Content Writing">Content Writing</button>
+      <button data-category="Video Editing">Video Editing</button>
+      <button data-category="Data Analysis">Data Analysis</button>
+    </div>
+    
+    <!-- Cards Grid -->
+    <div class="cards">
+      <!-- GitHub Copilot Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1618477247222-acbdb0e159b3?w=800&auto=format&fit=crop&q=60" alt="GitHub Copilot">
+        <div class="card-body">
+          <h2 class="card-title">GitHub Copilot</h2>
+          <div class="card-category">Code Completion | AI | Productivity | Student-Friendly</div>
+          <p class="card-description">
+            Your AI pair programmer that helps write code faster with smart suggestions. Free for students and teachers!
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Writes code based on your comments</li>
+            <li>Works in multiple programming languages</li>
+            <li>Learns from your coding style</li>
+            <li>Available in popular code editors</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for students and teachers, $10/month for others</p>
+          <a href="https://github.com/features/copilot" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Amazon CodeWhisperer Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542903660-eedba2cda473?w=800&auto=format&fit=crop&q=60" alt="Amazon CodeWhisperer">
+        <div class="card-body">
+          <h2 class="card-title">Amazon CodeWhisperer</h2>
+          <div class="card-category">Code Generation | AI | Security | AWS</div>
+          <p class="card-description">
+            AWS's free AI coding assistant that helps write secure and efficient code, with special focus on AWS services.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Free for individual developers</li>
+            <li>Security scan recommendations</li>
+            <li>Works best with AWS projects</li>
+            <li>Supports multiple languages</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for individual use</p>
+          <a href="https://aws.amazon.com/codewhisperer" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Copy.ai Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=60" alt="Copy.ai">
+        <div class="card-body">
+          <h2 class="card-title">Copy.ai</h2>
+          <div class="card-category">Content Writing | AI | Marketing | Blogging</div>
+          <p class="card-description">
+            Your friendly AI writing assistant for creating blogs, social media posts, and marketing content.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Ready-to-use writing templates</li>
+            <li>Works in multiple languages</li>
+            <li>Easy-to-use interface</li>
+            <li>Marketing-focused content</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with limited credits</p>
+          <a href="https://www.copy.ai" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- DALL-E 2 Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542744094-24638eff58bb?w=800&auto=format&fit=crop&q=60" alt="DALL-E 2">
+        <div class="card-body">
+          <h2 class="card-title">DALL-E 2</h2>
+          <div class="card-category">Design & Editing | AI Art | Image Generation | Creative</div>
+          <p class="card-description">
+            Create stunning, realistic images and art from your text descriptions using OpenAI's technology.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>High-quality image generation</li>
+            <li>Simple text-to-image interface</li>
+            <li>Edit existing images</li>
+            <li>Various art styles</li>
+          </ul>
+          <p class="card-pricing">Pricing: 15 free credits monthly</p>
+          <a href="https://labs.openai.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Descript Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?w=800&auto=format&fit=crop&q=60" alt="Descript">
+        <div class="card-body">
+          <h2 class="card-title">Descript</h2>
+          <div class="card-category">Video Editing | Audio Editing | Transcription</div>
+          <p class="card-description">
+            Edit videos as easily as editing a document, with powerful AI features for audio and video.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Edit video by editing text</li>
+            <li>Automatic transcription</li>
+            <li>Screen recording</li>
+            <li>Remove filler words</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with 3 hours monthly</p>
+          <a href="https://www.descript.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Soundraw Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&auto=format&fit=crop&q=60" alt="Soundraw">
+        <div class="card-body">
+          <h2 class="card-title">Soundraw</h2>
+          <div class="card-category">Music Creation | AI | Audio | Content Creation</div>
+          <p class="card-description">
+            Create custom royalty-free music for your videos and content using AI.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Customizable music loops</li>
+            <li>No attribution required</li>
+            <li>Various music styles</li>
+            <li>Export in high quality</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with limited downloads</p>
+          <a href="https://soundraw.io" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Elicit Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=60" alt="Elicit">
+        <div class="card-body">
+          <h2 class="card-title">Elicit</h2>
+          <div class="card-category">Data Analysis | Research | Academic | Analysis</div>
+          <p class="card-description">
+            AI research assistant that helps you find and understand scientific papers.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Summarizes research papers</li>
+            <li>Extracts key findings</li>
+            <li>Answers research questions</li>
+            <li>Compares studies</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free with limited queries per month</p>
+          <a href="https://elicit.org" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Ubersuggest Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1572177812156-58036aae439c?w=800&auto=format&fit=crop&q=60" alt="Ubersuggest">
+        <div class="card-body">
+          <h2 class="card-title">Ubersuggest</h2>
+          <div class="card-category">Content Writing | SEO | Marketing | Keywords</div>
+          <p class="card-description">
+            Simple SEO tool that helps you optimize your content and find keywords that rank.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Keyword research tools</li>
+            <li>Competitor analysis</li>
+            <li>Content ideas</li>
+            <li>Site audit features</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free plan with 3 searches daily</p>
+          <a href="https://neilpatel.com/ubersuggest" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Stable Diffusion Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1519638399535-1b036603ac77?w=800&auto=format&fit=crop&q=60" alt="Stable Diffusion">
+        <div class="card-body">
+          <h2 class="card-title">Stable Diffusion</h2>
+          <div class="card-category">Design & Editing | AI Art | Image Generation | Open Source</div>
+          <p class="card-description">
+            Open-source AI image generation with full control over the creative process.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Highly customizable settings</li>
+            <li>No content restrictions</li>
+            <li>Local installation option</li>
+            <li>Active community</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free for local use</p>
+          <a href="https://dreamstudio.ai" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- CapCut Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1492724724894-7464c27d0ceb?w=800&auto=format&fit=crop&q=60" alt="CapCut">
+        <div class="card-body">
+          <h2 class="card-title">CapCut</h2>
+          <div class="card-category">Video Editing | Social Media | Templates</div>
+          <p class="card-description">
+            Free video editing tool with AI-powered features perfect for social media content.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Auto-captions</li>
+            <li>Rich template library</li>
+            <li>TikTok integration</li>
+            <li>Easy to use interface</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free with optional premium features</p>
+          <a href="https://capcut.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Notion AI Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=800&auto=format&fit=crop&q=60" alt="Notion AI">
+        <div class="card-body">
+          <h2 class="card-title">Notion AI</h2>
+          <div class="card-category">Content Writing | Writing | Productivity | Workspace</div>
+          <p class="card-description">
+            AI writing assistant integrated directly into your Notion workspace.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Summarize text instantly</li>
+            <li>Generate fresh ideas</li>
+            <li>Improve writing style</li>
+            <li>Integrated with Notion</li>
+          </ul>
+          <p class="card-pricing">Pricing: 20 free AI responses</p>
+          <a href="https://notion.so" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- Boomy Card -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&auto=format&fit=crop&q=60" alt="Boomy">
+        <div class="card-body">
+          <h2 class="card-title">Boomy</h2>
+          <div class="card-category">Music Creation | Music | Audio | Publishing</div>
+          <p class="card-description">
+            Create and publish AI-generated music tracks in minutes.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>One-click music generation</li>
+            <li>Royalty-free tracks</li>
+            <li>Quick publishing</li>
+            <li>Various genres</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free to create</p>
+          <a href="https://boomy.com" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- New Code Analysis Card: Semgrep -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1554774853-bdbd19e3fa8d?w=800&auto=format&fit=crop&q=60" alt="Semgrep">
+        <div class="card-body">
+          <h2 class="card-title">Semgrep</h2>
+          <div class="card-category">Code Analysis | Static Analysis | Security</div>
+          <p class="card-description">
+            An open-source static analysis tool that uses pattern matching to find bugs and security vulnerabilities in your code.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Customizable rules</li>
+            <li>Easy integration into CI/CD pipelines</li>
+            <li>Supports multiple programming languages</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free and open-source</p>
+          <a href="https://semgrep.dev/" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+      <!-- New Code Assistant Card: Codeium -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1612831455544-c0cf4efc0c2d?w=800&auto=format&fit=crop&q=60" alt="Codeium">
+        <div class="card-body">
+          <h2 class="card-title">Codeium</h2>
+          <div class="card-category">Code Assistant | AI | Productivity</div>
+          <p class="card-description">
+            A free AI-powered code assistant that provides intelligent code completions and suggestions across multiple IDEs.
+          </p>
+          <strong>Key Features:</strong>
+          <ul class="card-keyfeatures">
+            <li>Intelligent code completions</li>
+            <li>Works with multiple IDEs</li>
+            <li>Boosts productivity</li>
+            <li>Free to use</li>
+          </ul>
+          <p class="card-pricing">Pricing: Free</p>
+          <a href="https://www.codeium.com/" target="_blank">Visit Site</a>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <script>
+    // Filtering functionality for navigation category buttons
+    const buttons = document.querySelectorAll('.nav-categories button');
+    const cards = document.querySelectorAll('.card');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-category').toLowerCase();
+        
+        // Remove active class from all buttons and add to clicked button
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        cards.forEach(card => {
+          const cardCategory = card.querySelector('.card-category').textContent.toLowerCase();
+          if (filter === 'all' || cardCategory.includes(filter)) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+  
+  <!-- Optional styling for active button -->
+  <style>
+    .nav-categories button.active {
+      background-color: #00acee;
+      color: #000;
+    }
+  </style>
+  
 </body>
 </html>
