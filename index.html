@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Coding Tools Directory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>AI Coding Tools Directory</h1>
+        <p>Discover the best AI-powered tools to supercharge your coding workflow</p>
+        <input type="text" id="search-bar" placeholder="Search tools..." onkeyup="searchTools()">
+    </header>
+
+    <div class="filters">
+        <button class="filter-btn" onclick="filterTools('all')">All</button>
+        <button class="filter-btn" onclick="filterTools('code-assistant')">Code Assistant</button>
+        <button class="filter-btn" onclick="filterTools('writing')">Writing</button>
+    </div>
+
+    <section class="tool-grid">
+        <div class="tool-card code-assistant">
+            <h2>GitHub Copilot</h2>
+            <p>AI-powered code completion for faster development.</p>
+            <span class="tag">AI</span> <span class="tag">Code Completion</span>
+        </div>
+
+        <div class="tool-card code-assistant">
+            <h2>Amazon CodeWhisperer</h2>
+            <p>Secure and efficient AI coding assistant from AWS.</p>
+            <span class="tag">AI</span> <span class="tag">AWS</span>
+        </div>
+
+        <div class="tool-card writing">
+            <h2>Copy.ai</h2>
+            <p>AI writing assistant for blogs and social media content.</p>
+            <span class="tag">Writing</span> <span class="tag">Marketing</span>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
